@@ -40,6 +40,20 @@
   </style>
 </helmet>
 
+<template id="__bundler_thumbnail" data-bg-color="#141414">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#141414"></rect>
+    <circle cx="600" cy="360" r="140" fill="url(#g)"></circle>
+    <defs>
+      <radialGradient id="g" cx="30%" cy="30%" r="70%">
+        <stop offset="0%" stop-color="#ffb44c"></stop>
+        <stop offset="100%" stop-color="#ff3d1a"></stop>
+      </radialGradient>
+    </defs>
+    <text x="600" y="560" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="72" fill="#f5f5f3">KYUSHU</text>
+  </svg>
+</template>
+
 <div style="width:100%;">
 
   <div class="rwd-nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; background-color: #F8F4F44D">
@@ -53,14 +67,14 @@
       <a href="#attention" style="color: #2d2b2b">注意事項</a>
       <a href="#info" style="color: #2d2b2b">實用資訊</a>
     </div>
-    <a href="#itinerary" style="color: #f3f2f2; padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; background-color: #2d2b2b">查看行程</a>
+    <a href="https://maps.app.goo.gl/jK4c44Du8q3sy2TM6" target="_blank" rel="noopener" style="color: #f3f2f2; padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; background-color: #2d2b2b">查看地圖</a>
   </div>
 
   <section id="top" class="rwd-hero rwd-section" style="position: relative; padding: 132px 40px 0; background: linear-gradient(180deg, #E4DFDF, #FF3700); overflow: hidden">
     <div class="rwd-hero-grid" style="display:grid;grid-template-columns:minmax(320px,1fr) 1fr;gap:48px;align-items:center;animation:fadeUp .6s ease both;">
       <div>
         <div style="display:inline-flex;align-items:center;gap:8px;background:#1f1f1e;color:#e8b98a;border-radius:999px;padding:8px 16px;font-size:13px;margin-bottom:24px;">2026.09.12 — 09.19 · 8天7夜</div>
-        <h1 style="font-family:'Outfit',sans-serif;font-size:clamp(38px,5.5vw,64px);line-height:1.05;font-weight:700;color:#f5f5f3;margin:0 0 20px;">重新定義<br><span style="color: var(--color-neutral-900)">我的九州旅程</span></h1>
+        <h1 style="font-family:'Outfit',sans-serif;font-size:clamp(38px,5.5vw,64px);line-height:1.05;font-weight:700;color:#f5f5f3;margin:0 0 20px;"><span style="color: var(--color-neutral-900);">九天九州及<br>九十九間餐廳之旅</span></h1>
         <p style="font-size: 17px; color: var(--color-neutral-900); max-width: 460px; margin: 0 0 32px; line-height: 1.6">熊本城與街町、由布院的溫泉慢旅、福岡的神社與屋台美食 —— 一次走完九州精華的 8 天行程，逐日附上營業狀態確認。</p>
         <div style="display:flex;gap:14px;align-items:center;">
           <a href="#itinerary" style="display:inline-flex;align-items:center;gap:10px;background:#f5f5f3;color:#141414;padding:14px 24px;border-radius:999px;font-weight:600;font-size:15px;">
@@ -185,7 +199,7 @@
                 <div style="font-size:12px;color:#c05a1e;margin-top:4px;">{{ spot.note }}</div>
               </sc-if>
             </div>
-            <div style="{{ spot.tagStyle }}flex-shrink:0;white-space:nowrap;">{{ spot.statusLabel }}</div>
+            <a href="https://maps.app.goo.gl/BJqk5GSzPXReugEq9" target="_blank" rel="noopener" style="{{ spot.tagStyle }}flex-shrink:0;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;">📍 地圖</a>
           </div>
         </sc-for>
       </div>
@@ -328,10 +342,8 @@ class Component extends DCLogic {
       spotCount: activeDayData.spots.length,
       spots: activeDayData.spots.map(s => ({
         ...s,
-        statusLabel: s.status === 'ok' ? '✅ 正常營業' : '⚠ 請注意',
-        tagStyle: s.status === 'ok'
-          ? 'background:#eef4ea;color:#4a7a3a;border-radius:999px;padding:6px 14px;font-size:12px;'
-          : 'background:#ffe9e0;color:#c05a1e;border-radius:999px;padding:6px 14px;font-size:12px;',
+        mapUrl: s.mapUrl || ('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.name)),
+        tagStyle: 'background:#eaf1fb;color:#2f5fa8;border-radius:999px;padding:6px 14px;font-size:12px;text-decoration:none;',
       })),
     };
     const daysView = this.days.map(d => {
